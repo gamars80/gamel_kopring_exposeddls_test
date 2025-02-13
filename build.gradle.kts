@@ -35,10 +35,6 @@ dependencies {
     // WebFlux (코루틴 지원 포함)
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
-    compileOnly("org.projectlombok:lombok")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    annotationProcessor("org.projectlombok:lombok")
-
     // HikariCP (데이터소스)
     implementation("com.zaxxer:HikariCP:$hikariCpVersion")
 
@@ -51,11 +47,10 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
 
-
-    implementation("ch.qos.logback:logback-classic:$logbackVersion")
-
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    // 코루틴 관련
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    // 검증 (Optional)
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
