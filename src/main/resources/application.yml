@@ -16,6 +16,14 @@ spring:
     #        show-sql: true
     excluded-packages: com.example.exposedstudy
 
+
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
 logging:
   level:
     root: info

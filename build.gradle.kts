@@ -27,14 +27,11 @@ configurations {
     }
 }
 
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     // WebFlux (코루틴 지원 포함)
     implementation("org.springframework.boot:spring-boot-starter-webflux")
-
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.4")
     // HikariCP (데이터소스)
     implementation("com.zaxxer:HikariCP:$hikariCpVersion")
 
@@ -51,10 +48,21 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     // 검증 (Optional)
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    
+    //트랜젝션
+    implementation("org.springframework:spring-tx")
+
+
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    
 
 }
+
+repositories {
+    mavenCentral()
+}
+
 
 kotlin {
     compilerOptions {
