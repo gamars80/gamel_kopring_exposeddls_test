@@ -2,9 +2,7 @@ package com.example.gamel_kopring_expoest_test.service
 
 
 import com.example.gamel_kopring_expoest_test.domain.common.dto.PageResponse
-import com.example.gamel_kopring_expoest_test.domain.common.dto.Pageable
 import com.example.gamel_kopring_expoest_test.domain.member.MemberDetail
-import com.example.gamel_kopring_expoest_test.domain.member.Members
 import com.example.gamel_kopring_expoest_test.domain.member.dto.MemberSaveRequest
 import com.example.gamel_kopring_expoest_test.repository.MemberRepository
 import kotlinx.coroutines.Dispatchers
@@ -24,10 +22,10 @@ class MemberService(
     suspend fun getMemberDetail(memberNo: Long): Mono<MemberDetail> {
         return Mono.fromCallable {
             memberRepository.getMemberDetail(memberNo) ?: throw Exception("Member not found")
-        }.subscribeOn(Schedulers.boundedElastic())
+        }.subscribeOn(/* scheduler = */ Schedulers.boundedElastic())
     }
 
-    suspend fun getMembers(page: Long, size: Int): PageResponse {
-        return memberRepository.getMembers(page, size)
+    suspend fun getMembers(page: Long, size: Int, userName: String?): PageResponse {
+        return memberRepository.getMembers(page, size, userName)
     }
 }

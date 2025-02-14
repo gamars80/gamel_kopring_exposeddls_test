@@ -7,6 +7,7 @@ import com.example.gamel_kopring_expoest_test.domain.member.Member
 import com.example.gamel_kopring_expoest_test.domain.member.MemberDetail
 import com.example.gamel_kopring_expoest_test.domain.member.MemberTable
 import com.example.gamel_kopring_expoest_test.domain.member.dto.MemberSaveRequest
+import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
@@ -47,13 +48,14 @@ class MemberRepository(
         }
     }
 
-    suspend fun getMembers(page: Long, size: Int): PageResponse {
+    suspend fun getMembers(page: Long, size: Int, userName: String?): PageResponse {
         val query = MemberTable.slice(
             MemberTable.memberNo,
             MemberTable.memberName,
             MemberTable.email
         ).selectAll()
 
+        userName?.let { query.andWhere { MemberTable.memberName.like(it) } }
         return databaseFactory.dbQuery {
             val total = query.count()
 

@@ -27,7 +27,10 @@ class MemberController(
     }
 
     @GetMapping("/list")
-    suspend fun getMembers(paging: Pageable): ResponseEntity<PageResponse> {
-        return ResponseEntity.ok(memberService.getMembers(paging.page, paging.size))
+    suspend fun getMembers(
+        paging: Pageable,
+        @RequestParam("userName") userName: String?
+        ): ResponseEntity<PageResponse> {
+        return ResponseEntity.ok(memberService.getMembers(paging.page, paging.size, userName))
     }
 }
