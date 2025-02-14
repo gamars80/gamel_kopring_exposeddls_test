@@ -1,4 +1,4 @@
-package domain.base
+package com.example.gamel_kopring_expoest_test.domain.base
 
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
