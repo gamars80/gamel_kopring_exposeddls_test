@@ -6,6 +6,14 @@ data class Member(
     val email: String
 )
 
+data class LoginMember(
+    val memberNo: Long,
+    val loginId: String,
+    val password: String,
+    val memberName: String,
+    val email: String
+)
+
 data class MemberDetail(
     val memberNo: Long? = null,
     val memberName: String,

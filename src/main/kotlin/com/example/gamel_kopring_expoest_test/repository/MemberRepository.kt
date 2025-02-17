@@ -3,6 +3,7 @@ package com.example.gamel_kopring_expoest_test.repository
 
 import com.example.gamel_kopring_expoest_test.config.DatabaseFactory
 import com.example.gamel_kopring_expoest_test.domain.common.dto.PageResponse
+import com.example.gamel_kopring_expoest_test.domain.member.LoginMember
 import com.example.gamel_kopring_expoest_test.domain.member.Member
 import com.example.gamel_kopring_expoest_test.domain.member.MemberDetail
 import com.example.gamel_kopring_expoest_test.domain.member.MemberTable
@@ -91,4 +92,20 @@ class MemberRepository(
     fun delete(memberNo: Long) {
         MemberTable.deleteWhere { MemberTable.memberNo eq memberNo }
     }
+
+    fun findByLoginId(loginId: String): LoginMember? {
+        return transaction {
+            MemberTable.select { MemberTable.loginId eq loginId }
+                .map { row ->
+                    LoginMember(
+                        memberNo = row[MemberTable.memberNo],
+                        loginId = row[MemberTable.loginId],
+                        password = row[MemberTable.password],
+                        memberName = row[MemberTable.memberName],
+                        email = row[MemberTable.email]
+                    )
+                }.singleOrNull()
+        }
+    }
+
 }

@@ -31,7 +31,17 @@ configurations {
 dependencies {
     // WebFlux (코루틴 지원 포함)
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+
+    // 코루틴 관련
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+
+    // spring-security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    // WebFlux Swagger
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.4")
+
+
     // HikariCP (데이터소스)
     implementation("com.zaxxer:HikariCP:$hikariCpVersion")
 
@@ -44,18 +54,23 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
 
-    // 코루틴 관련
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     // 검증 (Optional)
     implementation("org.springframework.boot:spring-boot-starter-validation")
     
     //트랜젝션
     implementation("org.springframework:spring-tx")
 
+    // JWT 기반 Resource Server (JWT 검증 등, 필요에 따라 사용)
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 
+    // JWT 생성/검증을 위한 JJWT 라이브러리 (버전은 최신 버전으로 조정)
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5") // Jackson 을 통한 JSON 파싱
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    
+
+
 
 }
 
