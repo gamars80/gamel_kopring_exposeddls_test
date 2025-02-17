@@ -34,9 +34,10 @@ class JwtFilter : WebFilter {
 
                 // "memberNo" 클레임 추출 (Number 타입이므로 toLong() 변환)
                 val memberNo = (claims["memberNo"] as? Number)?.toLong()
+                val roleType = (claims["roleType"] as? String)
                 if (memberNo != null) {
                     // AuthenticatedMember를 생성하여 Authentication의 principal로 설정
-                    val authenticatedMember = AuthenticatedMember(memberNo)
+                    val authenticatedMember = AuthenticatedMember(memberNo, roleType.toString())
                     val auth = UsernamePasswordAuthenticationToken(
                         authenticatedMember,
                         null,

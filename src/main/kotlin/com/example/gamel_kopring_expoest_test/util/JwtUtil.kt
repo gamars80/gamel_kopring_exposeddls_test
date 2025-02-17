@@ -1,5 +1,6 @@
 package com.example.gamel_kopring_expoest_test.util
 
+import com.example.gamel_kopring_expoest_test.enums.RoleType
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
@@ -12,12 +13,13 @@ object JwtUtil {
     private const val EXPIRATION_TIME = 86400000L  // 1일 (밀리초)
 
 
-    fun generateToken(memberNo: Long, loginId: String): String {
+    fun generateToken(memberNo: Long, loginId: String, roleType: String): String {
         val key = Keys.hmacShaKeyFor(SECRET_KEY.toByteArray(StandardCharsets.UTF_8))
 
         return Jwts.builder()
             .setSubject(loginId)
             .claim("memberNo", memberNo)
+            .claim("roleType", roleType)
             .setIssuedAt(Date())
             .setExpiration(Date(System.currentTimeMillis() + EXPIRATION_TIME))
             .signWith(key, SignatureAlgorithm.HS256)

@@ -1,10 +1,12 @@
 package com.example.gamel_kopring_expoest_test.domain.auth.dto
 
+import com.example.gamel_kopring_expoest_test.enums.RoleType
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 data class AuthenticatedMember(
-    val memberNo: Long
+    val memberNo: Long,
+    val roleType: String
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = mutableListOf()
 

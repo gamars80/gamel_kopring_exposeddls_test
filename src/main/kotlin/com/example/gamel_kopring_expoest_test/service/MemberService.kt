@@ -26,10 +26,8 @@ class MemberService(
         memberRepository.create(memberSaveReq)
     }
 
-    suspend fun getMemberDetail(memberNo: Long): Mono<MemberDetail> {
-        return Mono.fromCallable {
-            memberRepository.getMemberDetail(memberNo) ?: throw Exception("Member not found")
-        }.subscribeOn(/* scheduler = */ Schedulers.boundedElastic())
+    suspend fun getMemberDetail(memberNo: Long): MemberDetail {
+        return  memberRepository.getMemberDetail(memberNo) ?: throw Exception("Member not found")
     }
 
     suspend fun getMembers(page: Long, size: Int, userName: String?): PageResponse {
@@ -57,7 +55,7 @@ class MemberService(
         }
 
         // JWT 토큰 생성
-        val accessToken = JwtUtil.generateToken(member.memberNo, member.loginId);
+        val accessToken = JwtUtil.generateToken(member.memberNo, member.loginId, member.roleType);
 
         return LoginResponse.of(accessToken, member.memberNo, member.memberName, member.email);
     }

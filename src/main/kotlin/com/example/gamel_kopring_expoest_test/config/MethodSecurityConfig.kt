@@ -1,0 +1,8 @@
+package com.example.gamel_kopring_expoest_test.config
+
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity
+
+@Configuration
+@EnableReactiveMethodSecurity
+class MethodSecurityConfig

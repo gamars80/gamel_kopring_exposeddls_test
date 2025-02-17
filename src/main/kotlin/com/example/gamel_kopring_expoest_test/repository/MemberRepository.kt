@@ -9,33 +9,36 @@ import com.example.gamel_kopring_expoest_test.domain.member.MemberDetail
 import com.example.gamel_kopring_expoest_test.domain.member.MemberTable
 import com.example.gamel_kopring_expoest_test.domain.member.dto.MemberSaveRequest
 import com.example.gamel_kopring_expoest_test.domain.member.dto.MemberUpdateRequest
+import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.stereotype.Repository
+import kotlinx.coroutines.Dispatchers
 
 @Repository
 class MemberRepository(
     private val databaseFactory: DatabaseFactory,
 ) {
 
-    fun create(memberSaveReq: MemberSaveRequest): MemberDetail {
-        val generatedId: Long =
-            // insert 실행 후 결과 값(ResultRow 리스트)에서 첫 번째 행을 가져와 memberNo 컬럼의 값을 추출
-            MemberTable.insert { row ->
-                row[loginId] = memberSaveReq.loginId
-                row[email] = memberSaveReq.email
-                row[password] = memberSaveReq.password
-                row[memberName] = memberSaveReq.memberName
-            }.resultedValues?.firstOrNull()?.get(MemberTable.memberNo)
-                ?: throw Exception("Member insertion failed: No ID generated")
+    suspend fun create(memberSaveReq: MemberSaveRequest): MemberDetail = withContext(Dispatchers.IO) {
+        transaction {
+            val generatedId: Long =
+                MemberTable.insert { row ->
+                    row[loginId] = memberSaveReq.loginId
+                    row[email] = memberSaveReq.email
+                    row[password] = memberSaveReq.password
+                    row[memberName] = memberSaveReq.memberName
+                    row[roleType] = memberSaveReq.roleType
+                }.resultedValues?.firstOrNull()?.get(MemberTable.memberNo)
+                    ?: throw Exception("Member insertion failed: No ID generated")
 
-
-        return MemberDetail(
-            memberNo = generatedId,
-            memberName = memberSaveReq.memberName,
-            email = memberSaveReq.email
-        )
+            MemberDetail(
+                memberNo = generatedId,
+                memberName = memberSaveReq.memberName,
+                email = memberSaveReq.email
+            )
+        }
     }
 
     fun getMemberDetail(memberNo: Long): MemberDetail? {
@@ -102,7 +105,8 @@ class MemberRepository(
                         loginId = row[MemberTable.loginId],
                         password = row[MemberTable.password],
                         memberName = row[MemberTable.memberName],
-                        email = row[MemberTable.email]
+                        email = row[MemberTable.email],
+                        roleType = row[MemberTable.roleType]
                     )
                 }.singleOrNull()
         }

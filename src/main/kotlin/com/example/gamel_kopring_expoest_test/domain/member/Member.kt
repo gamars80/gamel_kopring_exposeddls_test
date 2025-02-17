@@ -11,6 +11,7 @@ data class LoginMember(
     val loginId: String,
     val password: String,
     val memberName: String,
+    val roleType: String,
     val email: String
 )
 

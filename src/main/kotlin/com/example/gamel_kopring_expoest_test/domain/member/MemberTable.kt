@@ -9,6 +9,7 @@ object MemberTable : Table("member") {
     val password = varchar("password", 50)
     val memberName = varchar("member_name", 255)
     val email = varchar("email", 255)
+    var roleType = varchar("role_type", 255)
 
     override val primaryKey = PrimaryKey(memberNo, name = "PK_MEMBER")
 }

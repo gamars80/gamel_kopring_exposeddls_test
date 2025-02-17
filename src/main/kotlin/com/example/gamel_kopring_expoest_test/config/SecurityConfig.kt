@@ -38,6 +38,7 @@ class SecurityConfig {
                         "/webjars/**"
                     ).permitAll()
                     .pathMatchers("/api/auth/login").permitAll()
+                    .pathMatchers("/api/member/signUp").permitAll()
                     // 그 외 모든 요청은 인증 필요 (상황에 따라 permitAll() 등으로 변경)
                     .anyExchange().authenticated()
             }
